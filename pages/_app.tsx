@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 // @ts-ignore
 import posthog from 'posthog-js'
 import withApollo from '../helpers/withApollo'
+import {useApollo} from '../helpers/apolloClient'
 import {
   ApolloProvider,
   ApolloClient,
@@ -32,8 +33,9 @@ function MyApp({ Component, pageProps, err, apollo }: IProps) {
       })
     }
   }, [])
+  const apolloClient = useApollo(pageProps)
   return (
-    <ApolloProvider client={apollo}>
+    <ApolloProvider client={apolloClient}>
       <Head>
         {/* <!-- Primary Meta Tags --> */}
         <title>C0D3</title>
@@ -81,4 +83,4 @@ function MyApp({ Component, pageProps, err, apollo }: IProps) {
   )
 }
 
-export default withApollo(MyApp)
+export default MyApp
