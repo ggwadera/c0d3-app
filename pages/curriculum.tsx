@@ -6,21 +6,15 @@ import ProgressCard from '../components/ProgressCard'
 import AnnouncementCard from '../components/AnnouncementCard'
 import AdditionalResources from '../components/AdditionalResources'
 import AlertsDisplay from '../components/AlertsDisplay'
-import LoadingSpinner from '../components/LoadingSpinner'
-import { withGetApp, GetAppProps } from '../graphql/'
+import { initializeApollo, addApolloState } from '../helpers/apolloClient'
+import { useGetAppQuery, GetAppQuery } from '../graphql/'
 import _ from 'lodash'
+import GET_APP from '../graphql/queries/getApp'
 
-export const Curriculum: React.FC<GetAppProps> = ({ data }) => {
-  const { loading, error, alerts, lessons, session } = data
-  if (loading) return <LoadingSpinner />
-  if (error) {
-    return (
-      <Error code={StatusCode.INTERNAL_SERVER_ERROR} message={error.message} />
-    )
-  }
-  if (!lessons || !alerts) {
-    return <Error code={StatusCode.INTERNAL_SERVER_ERROR} message="Bad data" />
-  }
+export const Curriculum: React.FC<{}> = () => {
+  //data is prepopulated server side, so no loading and no error checks
+  const { data } = useGetAppQuery()
+  const { alerts, lessons, session } = (data as unknown) as GetAppQuery
 
   const announcements = [
     'To make space for other students on our servers, your account will be deleted after 30 days of inactivity.',
@@ -94,5 +88,16 @@ export const Curriculum: React.FC<GetAppProps> = ({ data }) => {
     </Layout>
   )
 }
+export async function getStaticProps() {
+  const apolloClient = initializeApollo()
 
-export default withGetApp()(Curriculum)
+  await apolloClient.query({
+    query: GET_APP
+  })
+
+  return addApolloState(apolloClient, {
+    props: {},
+    revalidate: 2
+  })
+}
+export default Curriculum

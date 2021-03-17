@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 // TODO: type the posthog library
 // @ts-ignore
 import posthog from 'posthog-js'
-import withApollo from '../helpers/withApollo'
-import {useApollo} from '../helpers/apolloClient'
+import { useApollo } from '../helpers/apolloClient'
 import {
   ApolloProvider,
   ApolloClient,

@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavLink, { NavLinkProps } from './NavLink'
 import LoadingSpinner from './LoadingSpinner'
 import { Button } from './theme/Button'
 import { useRouter } from 'next/router'
 import { DropdownMenu } from './DropdownMenu'
-import { useLogoutMutation, withGetApp, GetAppProps } from '../graphql'
+import {
+  useLogoutMutation,
+  withGetApp,
+  GetAppProps,
+  useGetAppQuery,
+  Session
+} from '../graphql'
 import _ from 'lodash'
 
 import '../scss/navbar.scss'
@@ -101,7 +107,12 @@ const UnAuthButton = () => (
   </div>
 )
 
-const AppNav: React.FC<GetAppProps> = ({ data: { loading, session } }) => {
+const AppNav: React.FC<{}> = () => {
+  const [session, setSession] = useState<Session>()
+  const { data } = useGetAppQuery()
+  useEffect(() => {
+    if (data && data.session) setSession(data.session)
+  }, [data])
   const renderButtons = () => {
     if (!session || _.get(session, 'user.username') === null)
       return <UnAuthButton />
@@ -113,7 +124,6 @@ const AppNav: React.FC<GetAppProps> = ({ data: { loading, session } }) => {
     return <AuthButton username={username} initial={initial} />
   }
 
-  if (loading) return <LoadingSpinner />
   return (
     <nav className="navbar navbar-expand-lg navbar-light justify-content-between bg-white">
       <div className="container">
@@ -134,4 +144,4 @@ const AppNav: React.FC<GetAppProps> = ({ data: { loading, session } }) => {
   )
 }
 
-export default withGetApp()(AppNav)
+export default AppNav
