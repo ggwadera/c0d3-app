@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import NavLink, { NavLinkProps } from './NavLink'
-import LoadingSpinner from './LoadingSpinner'
 import { Button } from './theme/Button'
 import { useRouter } from 'next/router'
 import { DropdownMenu } from './DropdownMenu'
-import {
-  useLogoutMutation,
-  withGetApp,
-  GetAppProps,
-  useGetAppQuery,
-  Session
-} from '../graphql'
+import { useLogoutMutation, useGetAppQuery, Session } from '../graphql'
 import _ from 'lodash'
 
 import '../scss/navbar.scss'

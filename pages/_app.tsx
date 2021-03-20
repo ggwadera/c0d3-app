@@ -24,7 +24,7 @@ interface IProps extends AppProps {
   apollo: ApolloClient<NormalizedCacheObject>
 }
 
-function MyApp({ Component, pageProps, err, apollo }: IProps) {
+function MyApp({ Component, pageProps, err }: IProps) {
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' && process.env.POSTHOG_API_KEY) {
       posthog.init(process.env.POSTHOG_API_KEY, {
@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps, err, apollo }: IProps) {
       })
     }
   }, [])
-  const apolloClient = useApollo(pageProps)
+  const apolloClient = useApollo(pageProps.initialApolloState)
   return (
     <ApolloProvider client={apolloClient}>
       <Head>

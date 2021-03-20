@@ -1,12 +1,11 @@
 import * as React from 'react'
 import Layout from '../components/Layout'
-import Error, { StatusCode } from '../components/Error'
 import LessonCard from '../components/LessonCard'
 import ProgressCard from '../components/ProgressCard'
 import AnnouncementCard from '../components/AnnouncementCard'
 import AdditionalResources from '../components/AdditionalResources'
 import AlertsDisplay from '../components/AlertsDisplay'
-import { initializeApollo, addApolloState } from '../helpers/apolloClient'
+import { initializeApollo } from '../helpers/apolloClient'
 import { useGetAppQuery, GetAppQuery } from '../graphql/'
 import _ from 'lodash'
 import GET_APP from '../graphql/queries/getApp'
@@ -95,9 +94,10 @@ export async function getStaticProps() {
     query: GET_APP
   })
 
-  return addApolloState(apolloClient, {
-    props: {},
-    revalidate: 2
-  })
+  return {
+    props: {
+      initialApolloState: apolloClient.cache.extract()
+    }
+  }
 }
 export default Curriculum
