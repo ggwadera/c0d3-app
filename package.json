@@ -70,7 +70,7 @@
     "mailgun-js": "^0.22.0",
     "markdown-to-jsx": "^7.1.1",
     "nanoid": "^3.1.20",
-    "next": "^10.0.6",
+    "next": "^10.1.2",
     "next-connect": "^0.10.0",
     "next-with-apollo": "^5.1.1",
     "pg": "^8.5.1",
@@ -93,7 +93,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.13.10",
-    "@babel/preset-react": "^7.12.13",
+    "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.12.13",
     "@graphql-codegen/cli": "^1.21.2",
     "@graphql-codegen/typescript": "^1.21.0",
